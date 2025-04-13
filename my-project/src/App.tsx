@@ -14,7 +14,7 @@ function App() {
     const loadData = async () =>{
       try{
         const data = await fecthPosts();
-        setPosts(data);
+        setPosts(data.slice(0, 10));
       }catch(err){
         setError(err instanceof Error ? err.message: 'Failed to load posts');
       }finally{
