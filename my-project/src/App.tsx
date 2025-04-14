@@ -9,21 +9,30 @@ function App() {
   const [loading , setLoading] = useState(true);
   const [posts , setPosts] = useState<Post[]>([]);
   const [error , setError] = useState<string | null>(null); 
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    const loadData = async () =>{
-      try{
-        const data = await fecthPosts();
-        setPosts(data.slice(0, 10));
-      }catch(err){
-        setError(err instanceof Error ? err.message: 'Failed to load posts');
-      }finally{
-        setLoading(false);
-      }
-    };
-    loadData();
+    loadData(0);
   },[]);
 
+  const loadData = async (pageNumber: number) =>{
+    setLoading(true);
+    try{
+      const data = await fecthPosts([pageNumber * 10]);
+      setPosts(data.slice(0, 10));
+    }catch(err){
+      setError(err instanceof Error ? err.message: 'Failed to load posts');
+    }finally{
+      setLoading(false);
+    }
+  };
+
+  const handleNextPage = () =>{
+    const nextPage = page + 1;
+    setPage(nextPage);
+    loadData(nextPage);
+  }
+ 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -44,6 +53,11 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+
+        <button onClick={handleNextPage} style={{ marginLeft: '10px' }}>
+          Load Next 10 Posts
+        </button>
+
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
