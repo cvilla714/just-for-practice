@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { fecthPosts } from './utils/fetchPost'
 import Users from './components/Users'
+import { Post } from './types/models'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,7 +20,7 @@ function App() {
   const loadData = async (pageNumber: number) =>{
     setLoading(true);
     try{
-      const data = await fecthPosts([pageNumber * 10]);
+      const data = await fecthPosts(pageNumber * 10);
       setPosts(data.slice(0, 10));
     }catch(err){
       setError(err instanceof Error ? err.message: 'Failed to load posts');

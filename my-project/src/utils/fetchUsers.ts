@@ -1,10 +1,4 @@
-interface User {
-    id: number;
-    name: string;
-    username: string;
-    email: string;
-    phone: string;
-}
+import { User } from '../types/models';
 
 export const fetchUsers = async (): Promise<User[]> =>{
     try{

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { fetchUsers } from "../utils/fetchUsers";
+import { User } from "../types/models";
 
 const Users = () => {
     const [users, setUsers] = useState<User[]>([]);

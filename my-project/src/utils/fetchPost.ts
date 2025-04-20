@@ -1,9 +1,4 @@
-interface Post {
-    id: number;
-    title: string;
-    body: string
-
-}
+import { Post } from '../types/models';
 
 export const fecthPosts = async (start:number): Promise<Post[]> =>{
     try{
